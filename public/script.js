@@ -1,15 +1,26 @@
 const socket = io();
 const emojiPicker = new EmojiPicker({ emojiSize: 20, title: 'Pick an emoji' });
 
+const emojiKeywords = {
+  cool: "😎",
+  like: "👍",
+  boy: "👦",
+  girl: "👧",
+  smile: "😂"
+}
+
 // Handle form submission
 const form = document.getElementById('form');
 const input = document.getElementById('input');
+const sendButton = document.getElementById('send-button');
+
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-  if (input.value) {
-    socket.emit('chat message', input.value);
-    input.value = '';
-  }
+  sendMessage();
+});
+
+sendButton.addEventListener('click', () => {
+  sendMessage();
 });
 
 // Handle emoji insertion
@@ -31,3 +42,20 @@ socket.on('chat message', (msg) => {
   messageElement.innerHTML = messageWithEmojis;
   messages.appendChild(messageElement);
 });
+
+function sendMessage() {
+  const message = input.value.trim();
+  if (message) {
+    socket.emit('chat message', message);
+    input.value = '';
+  }
+}
+
+function replaceKeywordsWithEmojis(text) {
+  Object.keys(emojiKeywords).forEach(keyword => {
+    const emoji = emojiKeywords[keyword];
+    const pattern = new RegExp(keyword, 'g');
+    text = text.replace(pattern, emoji);
+  });
+  return text;
+}
