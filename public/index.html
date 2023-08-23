@@ -4,16 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Socket.io Chat App</title>
+  <link rel="stylesheet" href="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emoji-mart@3.0.0/css/emoji-mart.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <ul id="messages"></ul>
   <form id="form" action="#">
     <input id="input" autocomplete="off" /><button>Send</button>
+    <button id="emoji-button">😀</button>
   </form>
 
-  <!-- <script src="/socket.io/socket.io.js"></script> -->
-  <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emojione@4.5.0/lib/js/emojione.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emoji-mart@3.0.0/umd/emoji-mart.min.js"></script>
   <script src="./script.js"></script>
 </body>
 </html>
