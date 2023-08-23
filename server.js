@@ -6,30 +6,28 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 
+// Serve static files from the "public" directory
+app.use(express.static('public'));
+
+// Handle socket.io connections
+io.on('connection', (socket) => {
+  console.log('A user connected');
+
+  // Listen for chat messages
+  socket.on('chat message', (message) => {
+    // Broadcast the message to all connected clients
+    io.emit('chat message', message);
+  });
+
+  // Handle user disconnection
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
+  });
+});
+
 const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html'); // Create the HTML file
-});
-
-io.on('connection', (socket) => {
-    console.log('A user connected');
-    
-    // Handle incoming messages
-    socket.on('message', (data) => {
-        // Broadcast the message to all connected clients
-        io.emit('message', data);
-    });
-
-    socket.on('disconnect', () => {
-        console.log('A user disconnected');
-    });
-});
-
-// const PORT = 4000;
 server.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
+  console.log(`http://localhost:${PORT}`);
 });
-
-
-

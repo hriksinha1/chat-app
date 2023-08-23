@@ -1,0 +1,52 @@
+
+/* Reset some default styles */
+body, ul {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Basic styling for the chat container */
+  #messages {
+    list-style-type: none;
+    padding: 20px;
+    background-color: #f0f0f0;
+    height: 80vh;
+    overflow-y: scroll;
+  }
+  
+  /* Individual chat messages */
+  #messages li {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Styling for the input form */
+  #form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff;
+    border-top: 1px solid #ccc;
+  }
+  
+  #input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    background-color: #f0f0f0;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  
