@@ -1,61 +1,41 @@
 const socket = io();
-const emojiPicker = new EmojiPicker({ emojiSize: 20, title: 'Pick an emoji' });
-
-const emojiKeywords = {
-  cool: "😎",
-  like: "👍",
-  boy: "👦",
-  girl: "👧",
-  smile: "😂"
-}
 
 // Handle form submission
 const form = document.getElementById('form');
 const input = document.getElementById('input');
-const sendButton = document.getElementById('send-button');
+const buttonEmoji = document.getElementById('emoji-button');
+const emojiPickerBox = document.getElementById('emoji-picker-box');
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-  sendMessage();
-});
-
-sendButton.addEventListener('click', () => {
-  sendMessage();
-});
-
-// Handle emoji insertion
-const emojiButton = document.getElementById('emoji-button');
-emojiButton.addEventListener('click', () => {
-  emojiPicker.togglePicker(emojiButton);
-});
-
-emojiPicker.on('emoji-click', (event) => {
-  const emoji = event.emoji.native;
-  input.value += emoji;
+  if (input.value) {
+    socket.emit('chat message', input.value);
+    input.value = '';
+  }
 });
 
 // Handle incoming chat messages
 const messages = document.getElementById('messages');
 socket.on('chat message', (msg) => {
-  const messageElement = document.createElement('li');
-  const messageWithEmojis = emojione.toImage(msg);
-  messageElement.innerHTML = messageWithEmojis;
-  messages.appendChild(messageElement);
+  const li = document.createElement('li');
+  li.textContent = msg;
+  messages.appendChild(li);
 });
 
-function sendMessage() {
-  const message = input.value.trim();
-  if (message) {
-    socket.emit('chat message', message);
-    input.value = '';
-  }
-}
 
-function replaceKeywordsWithEmojis(text) {
-  Object.keys(emojiKeywords).forEach(keyword => {
-    const emoji = emojiKeywords[keyword];
-    const pattern = new RegExp(keyword, 'g');
-    text = text.replace(pattern, emoji);
-  });
-  return text;
-}
+buttonEmoji.addEventListener('click', () => {
+  const pickerOptions = { onEmojiSelect: console.log }
+  const picker = new EmojiMart.Picker(pickerOptions)
+
+  console.log(picker)
+  emojiPickerBox.appendChild(picker)
+  emojiPickerBox.style.display = 'block'
+  emojiPickerBox.style.position = 'absolute'
+  emojiPickerBox.style.zIndex = '1'
+  emojiPickerBox.style.bottom = '0'
+});
+
+
+
+
+

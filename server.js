@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
@@ -7,6 +8,7 @@ const server = http.createServer(app);
 const io = socketIO(server);
 
 // Serve static files from the "public" directory
+app.use(cors());
 app.use(express.static('public'));
 
 // Handle socket.io connections
