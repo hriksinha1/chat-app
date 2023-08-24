@@ -8,10 +8,32 @@ const emojiPickerBox = document.getElementById('emoji-picker-box');
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-  if (input.value) {
-    socket.emit('chat message', input.value);
-    input.value = '';
+ 
+  const emojiFormat = {
+    'smile': '😀',
+    'smiley': '😃',
+    'grinning': '😁',
+    'blush': '😊',
+    'relaxed': '☺️',
+    'wink': '😉',
+    'heart_eyes': '😍',
+    'kissing_heart': '😘',
+    'kissing_closed_eyes': '😚',
+  };
+  
+  const emojiKeys = Object.keys(emojiFormat);
+  const userInput = input.value.trim();
+  
+  if (emojiKeys.includes(userInput)) {
+    const emoji = emojiFormat[userInput];
+    socket.emit('chat message', emoji);
   }
+  
+  else {
+    socket.emit('chat message', userInput);
+  }
+  
+  input.value = '';
 });
 
 // Handle incoming chat messages
@@ -24,7 +46,9 @@ socket.on('chat message', (msg) => {
 
 
 buttonEmoji.addEventListener('click', () => {
-  const pickerOptions = { onEmojiSelect: console.log }
+  const pickerOptions = {
+    onEmojiSelect: console.log
+  }
   const picker = new EmojiMart.Picker(pickerOptions)
 
   console.log(picker)
@@ -34,8 +58,3 @@ buttonEmoji.addEventListener('click', () => {
   emojiPickerBox.style.zIndex = '1'
   emojiPickerBox.style.bottom = '0'
 });
-
-
-
-
-
