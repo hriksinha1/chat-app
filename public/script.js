@@ -6,6 +6,16 @@ const input = document.getElementById('input');
 const buttonEmoji = document.getElementById('emoji-button');
 const emojiPickerBox = document.getElementById('emoji-picker-box');
 
+const help = () => {
+  alert('Commands:\n/help - show this message\n/clear - clear all messages\n /random - send a random message');
+}
+
+const clear = () => {
+  const messages = document.getElementById('messages');
+  socket.emit('clear messages', messages);
+  messages.innerHTML = '';
+}
+
 form.addEventListener('submit', (e) => {
   e.preventDefault();
  
@@ -14,13 +24,14 @@ form.addEventListener('submit', (e) => {
     'smiley': '😃',
     'grinning': '😁',
     'blush': '😊',
-    'relaxed': '☺️',
     'wink': '😉',
     'heart_eyes': '😍',
     'kissing_heart': '😘',
     'kissing_closed_eyes': '😚',
+    'lol': '😆',
   };
-  
+
+
   const emojiKeys = Object.keys(emojiFormat);
   const userInput = input.value.trim();
   
@@ -28,7 +39,20 @@ form.addEventListener('submit', (e) => {
     const emoji = emojiFormat[userInput];
     socket.emit('chat message', emoji);
   }
-  
+  else if (userInput.startsWith('/')) {
+    if (userInput === '/help') {
+      help();
+    }
+    else if (userInput === '/random') {
+      socket.emit('chat message','random message' + Math.random());
+    }
+    else if (userInput === '/ping') {
+      socket.emit('chat message', 'pong');
+    }
+    else if (userInput === '/clear') {
+      clear();
+    }
+  }
   else {
     socket.emit('chat message', userInput);
   }
